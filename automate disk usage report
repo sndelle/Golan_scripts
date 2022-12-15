@@ -1,0 +1,36 @@
+package main
+
+import (
+    "fmt"
+    "os"
+    "os/exec"
+    "strings"
+)
+
+func main() {
+    // Run the `df` command to get information about disk usage
+    dfCmd := exec.Command("df", "-h")
+    dfOutput, err := dfCmd.CombinedOutput()
+    if err != nil {
+        fmt.Println("Error running `df` command:", err)
+        fmt.Println(string(dfOutput))
+        return
+    }
+
+    // Parse the output of the `df` command and print a report
+    dfLines := strings.Split(string(dfOutput), "\n")
+    for _, line := range dfLines {
+        fields := strings.Fields(line)
+        if len(fields) >= 6 && fields[0] != "Filesystem" {
+            // Print the filesystem, size, used, and available space
+            fmt.Printf("Filesystem: %s\n", fields[0])
+            fmt.Printf("Size: %s\n", fields[1])
+            fmt.Printf("Used: %s\n", fields[2])
+            fmt.Printf("Available: %s\n", fields[3])
+            fmt.Println()
+        }
+    }
+}
+//This script uses the os/exec package to run the df command, which provides information about disk usage on the system. It then parses the output of the command and prints a report with the filesystem, size, used, and available space for each filesystem listed in the output.
+
+//You can modify this script to fit your specific needs. For example, you can adjust the format of the report, or specify different arguments to the df command to control which filesystems are included in the report.
