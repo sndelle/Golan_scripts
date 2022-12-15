@@ -51,4 +51,4 @@ func main() {
 }
 // This script uses the os and os/exec packages to build the application or service, copy the built binary and any necessary resources to the production environment, and restart the application in the production environment.
 
-You will need to modify this script to fit your specific deployment process and environment. For example, you may need to adjust the commands used to build and copy the files, or specify different settings for the production environment.
+//You will need to modify this script to fit your specific deployment process and environment. For example, you may need to adjust the commands used to build and copy the files, or specify different settings for the production environment.
