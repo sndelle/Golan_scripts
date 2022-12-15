@@ -39,4 +39,13 @@ func main() {
         // Parse the output of the `du -hs` command and print the directory name and size
         duLines := strings.Split(string(duOutput), "\n")
         if len(duLines) >= 1 {
-            sizeFields := strings.Fields(duL
+            sizeFields := strings.Fields(duLines[0])
+            if len(sizeFields) >= 1 {
+                fmt.Printf("Directory %s: %s\n", dirName, sizeFields[0])
+            }
+        }
+    }
+}
+//This script uses the os, os/exec, and path/filepath packages to get a list of directories in the current working directory, run the du -hs command on each directory, and parse the output of the command to print the directory name and size.
+
+//To use this script, you will need to modify the code to specify the directories that you want to get the size of. You can specify a specific directory by providing its path, or use a pattern to match multiple directories (e.g. "/var/log/*" to match all directories in the /var/log directory). You can also adjust the format of the report to fit your needs.
