@@ -1,0 +1,51 @@
+package main
+
+import (
+    "fmt"
+    "os"
+    "os/exec"
+    "path/filepath"
+)
+
+func main() {
+    // Get the current working directory
+    cwd, err := os.Getwd()
+    if err != nil {
+        fmt.Println("Error getting current working directory:", err)
+        return
+    }
+
+    // Build the application or service
+    fmt.Println("Building application...")
+    buildCmd := exec.Command("go", "build")
+    buildCmd.Dir = cwd
+    buildOutput, err := buildCmd.CombinedOutput()
+    if err != nil {
+        fmt.Println("Error building application:", err)
+        fmt.Println(string(buildOutput))
+        return
+    }
+
+    // Copy the built binary and any necessary resources to the production environment
+    fmt.Println("Copying files to production environment...")
+    appName := filepath.Base(cwd)
+    copyCmd := exec.Command("scp", appName, "user@production-server:/var/www/app")
+    copyOutput, err := copyCmd.CombinedOutput()
+    if err != nil {
+        fmt.Println("Error copying files to production:", err)
+        fmt.Println(string(copyOutput))
+        return
+    }
+
+    // Restart the application or service in the production environment
+    fmt.Println("Restarting application in production...")
+    restartCmd := exec.Command("ssh", "user@production-server", "systemctl", "restart", appName)
+    restartOutput, err := restartCmd.CombinedOutput()
+    if err != nil {
+        fmt.Println("Error restarting application in production:", err)
+        fmt.Println(string(restartOutput))
+        return
+    }
+
+    fmt.Println("Deployment to production complete!")
+}
