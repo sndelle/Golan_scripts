@@ -1,0 +1,37 @@
+package main
+
+import (
+    "fmt"
+    "os"
+    "os/exec"
+)
+
+func main() {
+    // Get the current working directory
+    cwd, err := os.Getwd()
+    if err != nil {
+        fmt.Println("Error getting current working directory:", err)
+        return
+    }
+
+    // Run the `go test` command to execute all unit tests in the current directory
+    fmt.Println("Running unit tests...")
+    testCmd := exec.Command("go", "test", "./...")
+    testCmd.Dir = cwd
+    testOutput, err := testCmd.CombinedOutput()
+    if err != nil {
+        fmt.Println("Error running unit tests:", err)
+        fmt.Println(string(testOutput))
+        return
+    }
+
+    fmt.Println("Unit tests complete!")
+}
+//This script uses the os and os/exec packages to run the go test command, which will execute all unit tests in the current directory and its subdirectories.
+
+//You can modify this script to fit your specific unit testing needs. For example, you can specify specific directories or test files to run, or pass additional flags to the go test command to control how the tests are run.
+
+
+
+
+
