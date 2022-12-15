@@ -1,0 +1,42 @@
+package main
+
+import (
+    "fmt"
+    "os"
+    "os/exec"
+    "path/filepath"
+    "strings"
+)
+
+func main() {
+    // Get the current working directory
+    cwd, err := os.Getwd()
+    if err != nil {
+        fmt.Println("Error getting current working directory:", err)
+        return
+    }
+
+    // Get a list of directories in the current working directory
+    dirList, err := filepath.Glob(filepath.Join(cwd, "*"))
+    if err != nil {
+        fmt.Println("Error getting directory list:", err)
+        return
+    }
+
+    // For each directory, run the `du -hs` command to get the size
+    for _, dirPath := range dirList {
+        dirName := filepath.Base(dirPath)
+
+        // Run the `du -hs` command
+        duCmd := exec.Command("du", "-hs", dirPath)
+        duOutput, err := duCmd.CombinedOutput()
+        if err != nil {
+            fmt.Printf("Error getting size of directory %s: %s\n", dirName, err)
+            fmt.Println(string(duOutput))
+            continue
+        }
+
+        // Parse the output of the `du -hs` command and print the directory name and size
+        duLines := strings.Split(string(duOutput), "\n")
+        if len(duLines) >= 1 {
+            sizeFields := strings.Fields(duL
