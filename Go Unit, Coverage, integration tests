@@ -1,0 +1,61 @@
+package mypackage
+
+import "testing"
+
+// TestSum is a unit test for the Sum function.
+func TestSum(t *testing.T) {
+    tests := []struct {
+        a        int
+        b        int
+        expected int
+    }{
+        {1, 2, 3},
+        {0, 0, 0},
+        {-1, 1, 0},
+    }
+
+    for _, test := range tests {
+        result := Sum(test.a, test.b)
+        if result != test.expected {
+            t.Errorf("Sum(%d, %d) = %d, expected %d", test.a, test.b, result, test.expected)
+        }
+    }
+}
+
+// TestSumAndProduct is an integration test for the Sum and Product functions.
+func TestSumAndProduct(t *testing.T) {
+    tests := []struct {
+        a        int
+        b        int
+        expected int
+    }{
+        {1, 2, 3},
+        {0, 0, 0},
+        {-1, 1, 0},
+    }
+
+    for _, test := range tests {
+        sumResult := Sum(test.a, test.b)
+        productResult := Product(test.a, test.b)
+        result := sumResult + productResult
+        if result != test.expected {
+            t.Errorf("SumAndProduct(%d, %d) = %d, expected %d", test.a, test.b, result, test.expected)
+        }
+    }
+}
+
+// TestMain is the entry point for coverage testing.
+func TestMain(m *testing.M) {
+    // Run all tests.
+    code := m.Run()
+
+    // Generate coverage report.
+    coverage := testing.Coverage()
+    if coverage < 0.9 {
+        t.Errorf("Coverage is %.2f, expected at least 90%%", coverage)
+    }
+    os.Exit(code)
+}
+//To run the tests, you can use the go test command. This command will automatically discover and run any tests in the package, and will also generate a coverage report if the TestMain function is defined as shown above. You can also use the -cover flag to see a more detailed coverage report, or the -coverprofile flag to save the coverage report to a file.
+
+//For more information on testing in Go, please see the official Go documentation: https://golang.org/pkg/testing/
