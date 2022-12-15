@@ -1,0 +1,51 @@
+package main
+
+import (
+    "fmt"
+    "os"
+    "os/exec"
+)
+
+func main() {
+    // Determine the version or release to roll back to
+    rollbackVersion := "1.0.0"
+
+    // Stop the application or service in the production environment
+    fmt.Println("Stopping application in production...")
+    stopCmd := exec.Command("ssh", "user@production-server", "systemctl", "stop", "appname")
+    stopOutput, err := stopCmd.CombinedOutput()
+    if err != nil {
+        fmt.Println("Error stopping application in production:", err)
+        fmt.Println(string(stopOutput))
+        return
+    }
+
+    // Restore the application or service files from the specified version
+    fmt.Println("Restoring application files from version", rollbackVersion)
+    restoreCmd := exec.Command("ssh", "user@production-server", "cd /var/www/app && git checkout", rollbackVersion)
+    restoreOutput, err := restoreCmd.CombinedOutput()
+    if err != nil {
+        fmt.Println("Error restoring application files:", err)
+        fmt.Println(string(restoreOutput))
+        return
+    }
+
+    // Restart the application or service in the production environment
+    fmt.Println("Restarting application in production...")
+    restartCmd := exec.Command("ssh", "user@production-server", "systemctl", "restart", "appname")
+    restartOutput, err := restartCmd.CombinedOutput()
+    if err != nil {
+        fmt.Println("Error restarting application in production:", err)
+        fmt.Println(string(restartOutput))
+        return
+    }
+
+    fmt.Println("Rollback to version", rollbackVersion, "complete!")
+}
+//This script uses the os/exec package to stop the application or service in the production environment, restore the application files from the specified version, and restart the application in the production environment.
+
+//You will need to modify this script to fit your specific rollback process and environment. For example, you may need to adjust the commands used to stop and restart the application, or specify different methods for restoring the application files.
+
+
+
+
