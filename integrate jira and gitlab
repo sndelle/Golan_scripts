@@ -1,0 +1,25 @@
+To integrate Jira and GitLab, you will need to perform the following steps:
+
+Create a Jira account if you do not already have one, and create a project in Jira to track the work that will be associated with the GitLab repository.
+
+In GitLab, navigate to your project's Settings > Integrations page and click the "Add Jira Server" button.
+
+In the Jira integration configuration screen, enter the URL of your Jira instance, as well as your Jira username and password. Click the "Test Settings" button to verify the connection, and then click "Save" to save the configuration.
+
+In Jira, navigate to the project that you want to integrate with GitLab, and click the "Settings" icon in the sidebar.
+
+In the project settings, click the "Applications" tab and then click the "GitLab" link.
+
+In the GitLab integration configuration screen, enter the URL of your GitLab instance and click the "Authorize" button. This will allow Jira to access your GitLab repository.
+
+In GitLab, navigate to your project's Settings > Integrations page and click the "Add Webhook" button.
+
+In the webhook configuration screen, enter the URL of your Jira instance and select the events that you want to trigger the webhook. For example, you may want to trigger the webhook when new issues are created or when code is pushed to the repository. Click "Save" to save the webhook configuration.
+
+In Jira, navigate to the project that you want to integrate with GitLab and click the "Settings" icon in the sidebar.
+
+In the project settings, click the "GitLab" tab and select the repository that you want to integrate with Jira.
+
+In the repository configuration screen, select the events that you want to trigger actions in Jira. For example, you may want to create a new Jira issue when a new branch is pushed to the repository. Click "Save" to save the configuration.
+
+Once these steps have been completed, Jira and GitLab will be integrated and any configured events will trigger actions in both systems. For more detailed instructions, please see the Jira and GitLab documentation.
