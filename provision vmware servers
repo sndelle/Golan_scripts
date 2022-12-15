@@ -1,0 +1,35 @@
+package main
+
+import (
+    "fmt"
+    "log"
+    "net/url"
+    "os"
+    "strconv"
+
+    "github.com/vmware/govmomi"
+    "github.com/vmware/govmomi/object"
+    "github.com/vmware/govmomi/vapi/rest"
+    "github.com/vmware/govmomi/vim25/types"
+)
+
+func main() {
+    // Set up the VMware vSphere API client
+    vSphereURL, err := url.Parse("https://vcenter.example.com/sdk")
+    if err != nil {
+        log.Fatal(err)
+    }
+    vSphereClient, err := govmomi.NewClient(context.Background(), vSphereURL, true)
+    if err != nil {
+        log.Fatal(err)
+    }
+
+    // Set up the VMware vCloud API client
+    vCloudURL, err := url.Parse("https://vcd.example.com/api")
+    if err != nil {
+        log.Fatal(err)
+    }
+    vCloudClient := rest.NewClient(vCloudURL)
+    vCloudClient.SetCredentials(os.Getenv("VCLOUD_USERNAME"), os.Getenv("VCLOUD_PASSWORD"))
+
+   
