@@ -2,11 +2,12 @@ package main
 
 import (
     "fmt"
-    "os"
     "os/exec"
     "path/filepath"
     "strings"
 )
+ // for a specific directory you set a variable eg
+ // var checkpath ="/var/cache/yum"
 
 func main() {
     // Get the current working directory
@@ -28,7 +29,7 @@ func main() {
         dirName := filepath.Base(dirPath)
 
         // Run the `du -hs` command
-        duCmd := exec.Command("du", "-hs", dirPath)
+        duCmd := exec.Command("sudo", "du", "-hs", dirPath)
         duOutput, err := duCmd.CombinedOutput()
         if err != nil {
             fmt.Printf("Error getting size of directory %s: %s\n", dirName, err)
